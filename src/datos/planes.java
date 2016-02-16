@@ -1,20 +1,3 @@
-/**
- *
- * @Copyright 2014 "freejbakcups" por Adrian Seimandi - bajosega@gmail.com 
- *  
- * This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.  
- */
 
 package datos;
 
@@ -34,13 +17,13 @@ public class planes extends operaciones{
             + " (nombre,fechaCreado)"
             + " values"
             + " ('"+Nombre+"','" + jdatetime() +"')";    
-      if ( insertar(sql))
+      if ( SqlModificador(sql))
       { // como se guardo correctamente ,tengo que guardar los detalles del plan. 
         // para guardar los detalles tengo que averiguar el ultimo idPlan Ingresado
           
         ResultSet ConsultarID = null; // asi no me jode con que no es usada
         String idPLan = null ;  
-        ConsultarID=consultar("select idplan from PLAN order by idPlan desc");
+        ConsultarID=SqlConsulta("select idplan from PLAN order by idPlan desc");
           
         if(ConsultarID.next()) {idPLan=ConsultarID.getString("idPLan");}
         
@@ -52,7 +35,7 @@ public class planes extends operaciones{
                       + " (fk_idPlan,directorio)"
                       + " values"
                       + " ('"+ idPLan +"','" + origen +"')";
-              if (!insertar(sql)){    
+              if (!SqlModificador(sql)){    
                guardado = false;
               } 
         }
@@ -66,7 +49,7 @@ public class planes extends operaciones{
     }  
     
    public  void InsertarPlan(String sql){
-       insertar("INSERT INTO plan (nombre, fechaCreado, ultimaEjecucion, estado, activo) " +
+       SqlConsulta("INSERT INTO plan (nombre, fechaCreado, ultimaEjecucion, estado, activo) " +
                 "VALUES (" + sql +")");
    }   
 }
