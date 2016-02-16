@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class conexion {
         Connection conexion;
 	Statement consulta;
-	public String ruta;
+	 String ruta;
     
     public conexion(){
     ruta = "./base/terminal.s3db";    
