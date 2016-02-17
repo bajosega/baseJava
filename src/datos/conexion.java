@@ -10,12 +10,8 @@ import javax.swing.JOptionPane;
 public class conexion {
         Connection conexion;
 	Statement consulta;
-	 String ruta;
+	String ruta = "./base/terminal.s3db";
     
-    public conexion(){
-    ruta = "./base/terminal.s3db";    
-    }
-   
    public void conectar(){
 	try {
         Class.forName("org.sqlite.JDBC");
