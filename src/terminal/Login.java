@@ -3,8 +3,12 @@ package terminal;
 import datos.operaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JWindow;
 
 /**
  *
@@ -91,18 +95,37 @@ public class Login extends javax.swing.JFrame {
        ResultSet datos;
        Boolean NombreEncontrado = false;
        Boolean PassEncontrado = false; 
-       
-       
+          
        datos =  obj.SqlConsulta("Select * from usuarios");
         
         try {
             while (datos.next()){
                
+                if ( txtNombre.getText().trim().equals(datos.getString("usuario").trim())) {
+                    NombreEncontrado = true;
+                }
                 
+                 if ( txtpass.getText().trim().equals(datos.getString("pass").trim())) {
+                    PassEncontrado = true;
+                }
+                            
+            }
+        
+            if (NombreEncontrado == true &  PassEncontrado == true  ){
+                  JOptionPane.showMessageDialog(this, "usuario Correcto");
+            } 
+            else 
+            {
+                if ((NombreEncontrado) == false  ){
+                JOptionPane.showMessageDialog(this, "Nombre Usuario Incorrecto");
+                } 
+                else
+                    {
+                        JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
+                    }
+            }
                 
-                
-                
-            } } catch (SQLException ex) {
+         }catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
        
