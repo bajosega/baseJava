@@ -3,12 +3,11 @@ package terminal;
 import datos.operaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JWindow;
+
 
 /**
  *
@@ -38,9 +37,9 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtpass = new javax.swing.JTextField();
         btnApectar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        txtpass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,9 +69,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre)
-                    .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnApectar, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(btnApectar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtpass))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -100,12 +99,12 @@ public class Login extends javax.swing.JFrame {
 
     private void btnApectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApectarActionPerformed
        
-       operaciones obj = new operaciones();
+       operaciones objSql = new operaciones();
        ResultSet datos;
        Boolean NombreEncontrado = false;
        Boolean PassEncontrado = false; 
           
-       datos =  obj.SqlConsulta("Select * from usuarios");
+       datos =  objSql.SqlConsulta("Select * from usuarios");
         
         try {
             while (datos.next()){
@@ -121,7 +120,10 @@ public class Login extends javax.swing.JFrame {
             }
         
             if (NombreEncontrado == true &  PassEncontrado == true  ){
-                  JOptionPane.showMessageDialog(this, "usuario Correcto");
+                  //JOptionPane.showMessageDialog(this, "usuario Correcto");
+                  Principal obj2 = new Principal();
+                  this.setVisible(false);
+                  obj2.setVisible(true);
             } 
             else 
             {
@@ -185,6 +187,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtpass;
+    private javax.swing.JPasswordField txtpass;
     // End of variables declaration//GEN-END:variables
 }
