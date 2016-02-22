@@ -3,8 +3,9 @@ package terminal;
 import datos.operaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  * @author bajosega
@@ -20,8 +21,11 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     
     private void CargarChoferes() throws SQLException{
     
-     DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
-      
+   TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
+   ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
+     
+   DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
+   
         
       ResultSet resultado = null;   
       operaciones Oper = new operaciones();
@@ -29,16 +33,18 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
       
      
         while(resultado.next()){
-                Object[] fila = new Object[2];//Creamos un Objeto con tantos parámetros como datos retorne cada fila 
+                Object[] fila = new Object[3];//Creamos un Objeto con tantos parámetros como datos retorne cada fila 
                                               // de la consulta
-                fila[0] = resultado.getString("Apellido"); //Lo que hay entre comillas son los campos de la base de datos
-                fila[1] = resultado.getString("Nombre");
+                fila[0] = resultado.getString("id");
+                fila[1] = resultado.getString("Apellido"); //Lo que hay entre comillas son los campos de la base de datos
+                fila[2] = resultado.getString("Nombre");
+               
                 tablamodal.addRow(fila);
                 tblChoferes.setModel(tablamodal);
+               
+          
             }
-      
-       
-       
+        
     }
     
     
@@ -60,9 +66,22 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Apellido", "Nombre"
+                "id", "Apellido", "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblChoferes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblChoferesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblChoferes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -84,6 +103,14 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblChoferesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChoferesMouseClicked
+        
+    DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
+  
+    JOptionPane.showMessageDialog(this, tablamodal.getValueAt(tblChoferes.getSelectedRow(), 0));
+        
+    }//GEN-LAST:event_tblChoferesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

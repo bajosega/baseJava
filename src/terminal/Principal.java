@@ -5,7 +5,6 @@ import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  * @author bajosega
@@ -22,9 +21,7 @@ public class Principal extends javax.swing.JFrame {
         this.setTitle("Ventana Principal");
        //this.getRootPane().setDefaultButton(btnApectar);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        
-        
-         
+               
     }
  
     @SuppressWarnings("unchecked")
