@@ -3,6 +3,9 @@ package terminal;
 import datos.operaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -39,11 +42,8 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
    ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
    ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
      
-  
-      resultado=Oper.SqlConsulta("Select * from choferes");
+  resultado=Oper.SqlConsulta("Select * from choferes");
       
-      
-     
         while(resultado.next()){
                 Object[] fila = new Object[7];//Creamos un Objeto con tantos parámetros como datos retorne cada fila 
                                               // de la consulta
@@ -226,7 +226,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
 
     private void tblChoferesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChoferesMouseClicked
         
-    DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
+    //DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
   
   // JOptionPane.showMessageDialog(this, tablamodal.getValueAt(tblChoferes.getSelectedRow(), 1));
     
@@ -268,13 +268,21 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
-       
+       boolean resultado=false;
         
         if ("GUARDAR".equals(btnAccion.getText())) {
         
             // insertar 
+          resultado=Oper.SqlModificador("insert into choferes (dni,NroCarnet,Apellido,Nombre,Telefono,Direccion) Values ("
+                    + "'" + txtDNI.getText()       + "',"
+                    + "'" + txtNroCarnet.getText() + "',"
+                    + "'" + txtApellido.getText()  + "',"
+                    + "'" + txtNombre.getText()    + "'," 
+                    + "'" + txtTelefono.getText()  + "',"
+                    + "'" + txtDireccion.getText() + "')"
+                    );
             
-            
+         
             
         } else {
             
@@ -283,7 +291,16 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
         
         }
         
-        
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Comando Ejecutado");
+            btnNuevoActionPerformed(null);
+           try {
+               CargarChoferes();
+               tblChoferes.updateUI();
+           } catch (SQLException ex) {
+               Logger.getLogger(iframeChoferes.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        }
         
     }//GEN-LAST:event_btnAccionActionPerformed
 

@@ -23,7 +23,8 @@ public class operaciones extends conexion{
             try{    
                  consulta.close();  
                  conexion.close();  
-             }catch (SQLException e){  
+             }catch (SQLException e){
+                valor = false;
                 System.out.println("Mensaje:"+e.getMessage());
                 System.out.println("Estado:"+e.getSQLState());
                 System.out.println("Codigo del error:"+e.getErrorCode());
