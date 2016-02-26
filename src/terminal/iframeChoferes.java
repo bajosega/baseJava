@@ -3,7 +3,6 @@ package terminal;
 import datos.operaciones;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -12,13 +11,23 @@ import javax.swing.table.TableColumnModel;
  */
 public class iframeChoferes extends javax.swing.JInternalFrame {
 
+    // variables globales de la clase 
+    
+      DefaultTableModel tablamodal;
+      ResultSet resultado = null;   
+      operaciones Oper = new operaciones();
    
     public iframeChoferes() throws SQLException {
+        
         initComponents();
+        
+       // iniciando formulario seteamos algunos valores 
+        tablamodal = (DefaultTableModel)tblChoferes.getModel();
         
         // limpiar controles . 
          btnNuevoActionPerformed(null);
         
+        // mostramos el listado de choferes .  
         CargarChoferes();     
     }
 
@@ -30,11 +39,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
    ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
    ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
      
-   DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
-   
-        
-      ResultSet resultado = null;   
-      operaciones Oper = new operaciones();
+  
       resultado=Oper.SqlConsulta("Select * from choferes");
       
       
@@ -129,6 +134,11 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
         });
 
         btnAccion.setText("GUARDAR");
+        btnAccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccionActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("NUEVO");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +266,26 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
           
           
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+       
+        
+        if ("GUARDAR".equals(btnAccion.getText())) {
+        
+            // insertar 
+            
+            
+            
+        } else {
+            
+            // actualizar . 
+            
+        
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnAccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
