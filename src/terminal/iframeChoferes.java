@@ -41,7 +41,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
         
       ResultSet resultado= Oper.SqlConsulta("Select * from choferes");
       DefaultTableModel tabla = (DefaultTableModel)tblChoferes.getModel();
-      tabla.setRowCount(0);
+       tabla.setRowCount(0);
       
         while(resultado.next()){
                 Object[] fila = new Object[7];//Creamos un Objeto con tantos parámetros como datos retorne cada fila 
@@ -58,6 +58,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
             }
         
           tblChoferes.setModel(tabla);
+          tblChoferes.setAutoResizeMode(tblChoferes.AUTO_RESIZE_NEXT_COLUMN);
           tabla.fireTableDataChanged();
           tblChoferes.updateUI();
           
