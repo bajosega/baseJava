@@ -15,34 +15,33 @@ import javax.swing.table.TableColumnModel;
 public class iframeChoferes extends javax.swing.JInternalFrame {
 
     // variables globales de la clase 
+     
+   operaciones Oper = new operaciones();
+  
+   DefaultTableModel tablamodal;
     
-      DefaultTableModel tablamodal;
-      ResultSet resultado = null;   
-      operaciones Oper = new operaciones();
-   
+    
     public iframeChoferes() throws SQLException {
         
         initComponents();
         
-       // iniciando formulario seteamos algunos valores 
         tablamodal = (DefaultTableModel)tblChoferes.getModel();
+        
         
         // limpiar controles . 
          btnNuevoActionPerformed(null);
+         
         
         // mostramos el listado de choferes .  
         CargarChoferes();     
     }
 
     
-    private void CargarChoferes() throws SQLException{
-    
-   TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
-   ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
-   ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
-   ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
-     
-  resultado=Oper.SqlConsulta("Select * from choferes");
+   private void CargarChoferes() throws SQLException{
+        
+      ResultSet resultado= Oper.SqlConsulta("Select * from choferes");
+      DefaultTableModel tabla = (DefaultTableModel)tblChoferes.getModel();
+      tabla.setRowCount(0);
       
         while(resultado.next()){
                 Object[] fila = new Object[7];//Creamos un Objeto con tantos parámetros como datos retorne cada fila 
@@ -53,11 +52,21 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
                 fila[3] = resultado.getString("Apellido"); //Lo que hay entre comillas son los campos de la base de datos
                 fila[4] = resultado.getString("Nombre");
                 fila[5] = resultado.getString("Telefono");
-                fila[6] = resultado.getString("Direccion");
-                     
-                tablamodal.addRow(fila);
-                tblChoferes.setModel(tablamodal);
+                fila[6] = resultado.getString("Direccion");       
+                tabla.addRow(fila);
+                  
             }
+        
+          tblChoferes.setModel(tabla);
+          tabla.fireTableDataChanged();
+          tblChoferes.updateUI();
+          
+             TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
+            ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
+            ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
+            ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
+   
+         // resultado.close();
     }
     
     
@@ -83,6 +92,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
         txtFiltro = new javax.swing.JTextField();
         btnAccion = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -147,6 +157,13 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,7 +195,9 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAccion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNuevo)))
+                        .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -217,7 +236,8 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAccion)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnNuevo)
+                    .addComponent(btnEliminar))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -225,9 +245,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblChoferesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChoferesMouseClicked
-        
-    //DefaultTableModel tablamodal = (DefaultTableModel)tblChoferes.getModel();
-  
+     
   // JOptionPane.showMessageDialog(this, tablamodal.getValueAt(tblChoferes.getSelectedRow(), 1));
     
     //LLENAR LOS DATOS PARA PODER EDITAR    
@@ -241,8 +259,9 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     //Habilitar Colocar bANDERA  de edicion
     
     btnAccion.setText("MODIFICAR");
-    btnNuevo.setEnabled(true);
     
+    btnNuevo.setEnabled(true);
+    btnEliminar.setEnabled(true);
         
     }//GEN-LAST:event_tblChoferesMouseClicked
 
@@ -255,25 +274,25 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
          
           btnAccion.setText("GUARDAR");
-          btnNuevo.setEnabled(false);
+          btnEliminar.setEnabled(false);
           
+          btnNuevo.setEnabled(false);
           txtDNI.setText("");
           txtNroCarnet.setText("");
           txtApellido.setText("");
           txtNombre.setText("");
           txtTelefono.setText("");
           txtDireccion.setText("");
-          
-          
+                   
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
-       boolean resultado=false;
+       boolean resu=false;
         
         if ("GUARDAR".equals(btnAccion.getText())) {
         
             // insertar 
-          resultado=Oper.SqlModificador("insert into choferes (dni,NroCarnet,Apellido,Nombre,Telefono,Direccion) Values ("
+          resu=Oper.SqlModificador("insert into choferes (dni,NroCarnet,Apellido,Nombre,Telefono,Direccion) Values ("
                     + "'" + txtDNI.getText()       + "',"
                     + "'" + txtNroCarnet.getText() + "',"
                     + "'" + txtApellido.getText()  + "',"
@@ -281,32 +300,46 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
                     + "'" + txtTelefono.getText()  + "',"
                     + "'" + txtDireccion.getText() + "')"
                     );
-            
-         
-            
+                 
         } else {
             
             // actualizar . 
             
-        
+      
         }
         
-        if (resultado == true) {
-            JOptionPane.showMessageDialog(null, "Comando Ejecutado");
-            btnNuevoActionPerformed(null);
+        if (resu == true) {
            try {
+               btnNuevoActionPerformed(null);
+               JOptionPane.showMessageDialog(null, "Comando Ejecutado");
                CargarChoferes();
-               tblChoferes.updateUI();
+               //tblChoferes.update(null);
            } catch (SQLException ex) {
                Logger.getLogger(iframeChoferes.class.getName()).log(Level.SEVERE, null, ex);
+               JOptionPane.showMessageDialog(null, ex.getMessage() );
+            
            }
-        }
-        
+        }     
     }//GEN-LAST:event_btnAccionActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+          try {
+               Oper.SqlModificador("DELETE FROM CHOFERES WHERE id='" +(String) tablamodal.getValueAt(tblChoferes.getSelectedRow(), 0)+"'" );
+              btnNuevoActionPerformed(null);
+              CargarChoferes();
+              JOptionPane.showMessageDialog(null, "Comando Ejecutado");
+          } catch (SQLException ex) {
+              Logger.getLogger(iframeChoferes.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(null, ex.getMessage() );
+            
+          }   
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccion;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
