@@ -58,14 +58,14 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
             }
         
           tblChoferes.setModel(tabla);
-          tblChoferes.setAutoResizeMode(tblChoferes.AUTO_RESIZE_NEXT_COLUMN);
+          //tblChoferes.setAutoResizeMode(tblChoferes.AUTO_RESIZE_NEXT_COLUMN);
           tabla.fireTableDataChanged();
           tblChoferes.updateUI();
           
-             TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
-            ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
-            ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
-            ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
+           //TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
+           //ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
+           //ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
+           //ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
    
          // resultado.close();
     }
@@ -123,6 +123,23 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblChoferes);
+        if (tblChoferes.getColumnModel().getColumnCount() > 0) {
+            tblChoferes.getColumnModel().getColumn(0).setMinWidth(0);
+            tblChoferes.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblChoferes.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblChoferes.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblChoferes.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblChoferes.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblChoferes.getColumnModel().getColumn(2).setMaxWidth(100);
+            tblChoferes.getColumnModel().getColumn(3).setMinWidth(150);
+            tblChoferes.getColumnModel().getColumn(4).setMinWidth(150);
+            tblChoferes.getColumnModel().getColumn(5).setMinWidth(0);
+            tblChoferes.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblChoferes.getColumnModel().getColumn(5).setMaxWidth(0);
+            tblChoferes.getColumnModel().getColumn(6).setMinWidth(0);
+            tblChoferes.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblChoferes.getColumnModel().getColumn(6).setMaxWidth(0);
+        }
 
         jLabel2.setText("DNI:");
 
@@ -169,7 +186,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,10 +319,16 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
                     + "'" + txtDireccion.getText() + "')"
                     );
                  
-        } else {
-            
+        } else {    
             // actualizar . 
-            
+             resu=Oper.SqlModificador("update choferes set "
+                    + "dni='" + txtDNI.getText()       + "',"
+                    + "NroCarnet='" + txtNroCarnet.getText() + "',"
+                    + "Apellido='" + txtApellido.getText()  + "',"
+                    + "Nombre='" + txtNombre.getText()    + "'," 
+                    + "Telefono='" + txtTelefono.getText()  + "',"
+                    + "Direccion='" + txtDireccion.getText() + "'"
+                    );
       
         }
         
