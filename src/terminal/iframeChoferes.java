@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 /**
  * @author bajosega
@@ -20,27 +19,22 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
   
    DefaultTableModel tablamodal;
     
-    
     public iframeChoferes() throws SQLException {
         
         initComponents();
         
         tablamodal = (DefaultTableModel)tblChoferes.getModel();
-        
-        
+             
         // limpiar controles . 
          btnNuevoActionPerformed(null);
-         
-        
+                
         // mostramos el listado de choferes .  
         CargarChoferes();     
     }
-
-    
+   
    private void CargarChoferes() throws SQLException{
       
-      // declarar sqlquerry 
-       
+      // declarar sqlquerry     
       String SqlQuerry;
       
       SqlQuerry="Select * from choferes ";
@@ -48,9 +42,7 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
       SqlQuerry +="or NroCarnet like '%"+  txtFiltro.getText() +"%' "; 
       SqlQuerry +="or Apellido like '%"+  txtFiltro.getText() +"%' "; 
       SqlQuerry +="or Nombre like '%"+  txtFiltro.getText() +"%' "; 
-      
-      
-      
+       
       //JOptionPane.showMessageDialog(null, SqlQuerry);
        
       ResultSet resultado= Oper.SqlConsulta(SqlQuerry);
@@ -73,19 +65,13 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
             }
         
           tblChoferes.setModel(tabla);
-          //tblChoferes.setAutoResizeMode(tblChoferes.AUTO_RESIZE_NEXT_COLUMN);
+       
           tabla.fireTableDataChanged();
           tblChoferes.updateUI();
-          
-           //TableColumnModel ModeloColumnas =tblChoferes.getColumnModel();
-           //ModeloColumnas.removeColumn(tblChoferes.getColumn("id"));
-           //ModeloColumnas.removeColumn(tblChoferes.getColumn("Telefono"));
-           //ModeloColumnas.removeColumn(tblChoferes.getColumn("Direccion"));
-   
-         // resultado.close();
+              
+          //resultado.close();
     }
-    
-    
+      
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -296,10 +282,8 @@ public class iframeChoferes extends javax.swing.JInternalFrame {
     txtTelefono.setText((String)tablamodal.getValueAt(tblChoferes.getSelectedRow(), 5));
     txtDireccion.setText((String)tablamodal.getValueAt(tblChoferes.getSelectedRow(), 6));
     
-    //Habilitar Colocar bANDERA  de edicion
-    
-    btnAccion.setText("MODIFICAR");
-    
+    //Habilitar Colocar bANDERA  de edicion  
+    btnAccion.setText("MODIFICAR");  
     btnNuevo.setEnabled(true);
     btnEliminar.setEnabled(true);
         
